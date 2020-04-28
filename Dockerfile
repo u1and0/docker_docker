@@ -9,7 +9,7 @@
 # * dotfiles(@u1and0)
 #
 # Usage:
-#     `docker run -it -v /var/run/docker.sock:/var/run/docker.sock u1and0/docker`
+#     `docker run -it -v /var/run/docker.sock:/var/run/docker.sock u1and0/docker` -v `pwd`:/work
 
 FROM u1and0/zplug:latest
 
@@ -23,11 +23,9 @@ RUN git submodule update --init --recursive .tmux/plugins/tpm &&\
 RUN sudo pacman -Syyu --noconfirm docker pigz &&\
     pacman -Qtdq | xargs -r sudo pacman --noconfirm -Rcns
 
-# apply "alias docker=sudo docker" patch
-RUN git pull origin master
-ENV SHELL="/usr/bin/zsh"
+ENV SHELL "/usr/bin/zsh"
 CMD ["/usr/bin/zsh"]
 LABEL maintainer="u1and0 <e01.ando60@gmail.com>"\
       description="Docker in Docker with archlinux image"\
-      version="v0.0.0"
+      version="v0.1.0"
 
