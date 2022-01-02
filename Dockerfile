@@ -27,5 +27,5 @@ ENV SHELL "/usr/bin/zsh"
 CMD ["/usr/bin/zsh"]
 LABEL maintainer="u1and0 <e01.ando60@gmail.com>"\
       description="Docker in Docker with archlinux image"\
-      version="v0.1.0"
+      version="v1.0.0"
 
