@@ -20,12 +20,12 @@ RUN git submodule update --init --recursive .tmux/plugins/tpm &&\
     pacman -Qtdq | xargs -r sudo pacman --noconfirm -Rcns
 
 # Install docker
-RUN sudo pacman -Syyu --noconfirm docker pigz &&\
+RUN sudo pacman -Syyu --noconfirm docker docker-compose pigz &&\
     pacman -Qtdq | xargs -r sudo pacman --noconfirm -Rcns
 
 ENV SHELL "/usr/bin/zsh"
 CMD ["/usr/bin/zsh"]
 LABEL maintainer="u1and0 <e01.ando60@gmail.com>"\
       description="Docker in Docker with archlinux image"\
-      version="v1.0.0"
+      version="v1.1.0"
 
