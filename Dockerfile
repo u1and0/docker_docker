@@ -13,19 +13,18 @@
 
 FROM u1and0/zplug:latest
 
-# Install tmux && tmux-plugins
-RUN git submodule update --init --recursive .tmux/plugins/tpm &&\
-    sudo pacman -Syyu --noconfirm tmux &&\
-    ${HOME}/.tmux/plugins/tpm/scripts/install_plugins.sh &&\
+# Install docker, tmux
+USER root
+RUN pacman -Syyu --noconfirm tmux docker docker-compose docker-buildx pigz&&\
     pacman -Qtdq | xargs -r sudo pacman --noconfirm -Rcns
 
-# Install docker
-RUN sudo pacman -Syyu --noconfirm docker docker-compose pigz &&\
-    pacman -Qtdq | xargs -r sudo pacman --noconfirm -Rcns
+# Install tmux && tmux-plugins
+USER u1and0
+RUN git submodule update --init --recursive .tmux/plugins/tpm &&\
+    ${HOME}/.tmux/plugins/tpm/scripts/install_plugins.sh
 
 ENV SHELL "/usr/bin/zsh"
 CMD ["/usr/bin/zsh"]
 LABEL maintainer="u1and0 <e01.ando60@gmail.com>"\
       description="Docker in Docker with archlinux image"\
-      version="v1.1.0"
-
+      version="v2.0.0"
