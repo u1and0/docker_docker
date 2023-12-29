@@ -15,13 +15,19 @@ FROM u1and0/zplug:latest
 
 # Install docker, tmux
 USER root
-RUN pacman -Syyu --noconfirm tmux docker docker-compose docker-buildx pigz&&\
-    pacman -Qtdq | xargs -r sudo pacman --noconfirm -Rcns
+RUN pacman -Syyu --noconfirm tmux \
+                            docker \
+                            docker-compose \
+                            docker-buildx \
+                            pigz &&\
+    /bin/sh -o 'pacman -Qtdq | xargs -r pacman --noconfirm -Rcns'
 
 # Install tmux && tmux-plugins
 USER u1and0
-RUN git submodule update --init --recursive .tmux/plugins/tpm &&\
-    ${HOME}/.tmux/plugins/tpm/scripts/install_plugins.sh
+RUN yay -Syu --noconfirm hadolint-bin &&\
+    /bin/sh -o 'yay -Qtdq | xargs -r yay --noconfirm -Rcns' &&\
+    git submodule update --init --recursive .tmux/plugins/tpm &&\
+    "${HOME}"/.tmux/plugins/tpm/scripts/install_plugins.sh
 
 ENV SHELL "/usr/bin/zsh"
 CMD ["/usr/bin/zsh"]
